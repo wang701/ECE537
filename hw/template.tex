@@ -14,14 +14,18 @@
 \usepackage{float}
 \usepackage{listings}
 \usepackage[margin=1.0in]{geometry}
-\usepackage{minted}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{scrextend}
+\usepackage{siunitx}
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=1cm, minimum height=1cm,text centered, draw=black, fill=white!30]
+\tikzstyle{process} = [rectangle, minimum width=1cm, minimum height=1cm, text centered, draw=black, fill=white!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
 
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
-
-\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
-
-%\usepackage{times} % Uncomment to use the Times New Roman font
 
 %-----------------------------------------------------------------------------
 %	DOCUMENT INFORMATION
@@ -29,11 +33,11 @@
 
 \title{ECE 547 Fall 2016 Homework 1} % Title
 
-\author{Yang \textsc{Wang}} % Author name
+\author{Yang \textsc{Wang} \\ PUID: 0024086580} % Author name
 
 \date{\today} % Date for the report
 
-\renewcommand{\theenumi}{\Alph{enumi}} % use letters for list items
+\renewcommand{\theenumi}{\alph{enumi}} % use letters for list items
 
 \begin{document}
 
@@ -42,11 +46,5 @@
 %-----------------------------------------------------------------------------
 %	Problem 1
 %-----------------------------------------------------------------------------
-
-\section{Problem 1}
-	\begin{enumerate}[label=\alph*]
-		\item This is the answer to a.
-		\item This is the answer to b.
-	\end{enumerate}
 
 \end{document}
