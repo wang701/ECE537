@@ -8,7 +8,6 @@
 \usepackage{natbib} % Required to change bibliography style to APA
 \usepackage{amsmath} % Required for some math elements
 \usepackage{amssymb}
-\usepackage{mathtools}
 \usepackage{grffile}
 \usepackage[export]{adjustbox}
 \usepackage{subcaption}
@@ -25,14 +24,13 @@
 \tikzstyle{process} = [rectangle, minimum width=1cm, minimum height=1cm, text centered, draw=black, fill=white!30]
 \tikzstyle{arrow} = [thick,->,>=stealth]
 
-\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
 
 %-----------------------------------------------------------------------------
 %	DOCUMENT INFORMATION
 %-----------------------------------------------------------------------------
 
-\title{ECE 547 Fall 2016 Homework 1} % Title
+\title{ECE 547 Fall 2016 Homework 2} % Title
 
 \author{Yang \textsc{Wang}}  % Author name
 
@@ -48,4 +46,146 @@
 %	Problem 1
 %-----------------------------------------------------------------------------
 
+\section*{Probability Review Problems}
+	\subsection*{Problem 1}
+		\begin{enumerate}
+			\item Since $X$ and $Y$ have identical distributions,
+				\begin{gather*}
+					P(\left\{X \in A\right\}) = P(\left\{Y \in A\right\}), A \in \mathbb{R} \\
+					\implies X = Y
+				\end{gather*}
+				Therefore, the statement is \textbf{true}.
+			\item Since $X$ and $Y$ have identical distributions,
+				let $F(t) = P(\left\{X \leq t\right\}) = P(\left\{Y \leq t\right\})$,
+				\begin{gather*}
+					\implies E[X] = E[Y] = \int_{\mathbb{R}}^{}t \cdot dF(t)
+				\end{gather*}
+				Therefore, the statement is \textbf{true}.
+			%TODO\item
+		\end{enumerate}
+
+	\subsection*{Problem 2}
+		\begin{enumerate}
+			\item We know $X$ is a non-negative r.v. with distribution $F$, using the
+				definition of expected value of a r.v.,
+				\begin{align*}
+					E[X] &= \int_{0}^{\infty} xf_{X}(x)dx \\
+					&= \int_{0}^{\infty} xdF_{X}(x) \\
+					&= -\int_{0}^{\infty} xd\bar{F}_X(x) \\
+				\end{align*}
+				Using integration by parts,
+				let $u = x$, $du = dx$, $dv = d\bar{F}_{X}(x)$, then $v = \bar{F}_{X}(x)$,
+				\begin{align*}
+					E[X] &= -x\bar{F}_{X}(x) \bigg|_{0}^{\infty} + \int_{0}^{\infty}\bar{F}_{X}(x)dx \\
+					&= -x\bar{F}_{X}(x) \bigg|_{0}^{\infty} + \int_{0}^{\infty}(1 - F_{X}(x))dx \\
+					&= 0 + \int_{0}^{\infty}(1 - F_{X}(x))dx \\
+					&= \int_{0}^{\infty}P(\left\{ X > x \right\})dx
+				\end{align*}
+			\item From the definition of the expected value of a r.v.,
+				\begin{align*}
+					E[X^n] &= \int_{0}^{\infty} x^nf_{X}(x)dx \\
+					&= -\int_{0}^{\infty} x^nd\bar{F}_X(x)
+				\end{align*}
+				Using the same integration by parts method, we can get,
+				\begin{align*}
+					E[X] &= -x^n\bar{F}_{X}(x) \bigg|_{0}^{\infty} + \int_{0}^{\infty}nx^{n-1}\bar{F}_{X}(x)dx \\
+					&= -x^n\bar{F}_{X}(x) \bigg|_{0}^{\infty} + \int_{0}^{\infty}nx^{n-1}(1 - F_{X}(x))dx \\
+					&= 0 + \int_{0}^{\infty}nx^{n-1}(1 - F_{X}(x))dx \\
+					&= \int_{0}^{\infty}nx^{n-1}P(\left\{ X > x \right\})dx
+				\end{align*}
+		\end{enumerate}
+
+	\subsection*{Problem 3}
+		\begin{enumerate}
+			%TODO\item
+			\item From the definition of joint expectation,
+				\begin{align*}
+					E[XY] = \iint_{}xyf_{XY}(x,y) \,dx\,dy
+				\end{align*}
+				Since $X$ and $Y$ are statistically independent, hence,
+				\begin{align*}
+					E[XY] &= \iint_{}xyf_{XY}(x,y) \,dx\,dy \\
+					&= \int_{}^{}xf_X{x}dx \int_{}^{}yf_Y{y}dy \\
+					&= E[X]E[Y]
+				\end{align*}
+				Therefore, $X$ and $Y$ are uncorrelated. The converse of this statement is
+				\textbf{not true}. A counterexample:
+				\begin{align*}
+					X & \sim \mathrm{\textit{U}}(-1,1) \\
+					Y &= X^2
+				\end{align*}
+				E[XY] = 0 but $X$ and $Y$ are dependent.
+			\item We know $\Psi_{Z}(t) = E[e^{tZ}]$,
+				\begin{align*}
+					\Psi_{X+Y}(t) = E[e^{t(X+Y)}] = E[e^{tX}e^{tY}]
+				\end{align*}
+				We know $X$ and $Y$ are statistically independent, therefore,
+				\begin{align*}
+					E[e^{tX}e^{tY}] &= E[e^{tX}]E[e^{tY}] \\
+					&= \Psi_{X}(t)\Psi_{Y}(t) \\
+					\implies \Psi_{X+Y}(t) &= \Psi_{X}(t)\Psi_{Y}(t)
+				\end{align*}
+				From the moment theorem, we know,
+				\begin{equation}
+					E[X^n] = \frac{d^n\Psi_{X}(t)}{dt^n} = \Psi_{X}^{(n)}(0)
+					\label{eq:1}
+				\end{equation}
+				Using equation \ref{eq:1}, for $E[X]$, we can see,
+				\begin{align*}
+					E[X] &= \frac{d\Psi_{X}(t)}{dt} = \frac{n}{\lambda}\left(\frac{\lambda}{\lambda-t}\right)^{n+1} \bigg|_{t=0} \\
+					&= \frac{n}{\lambda}
+				\end{align*}
+				We know Var$[X] = E[X^2] - \left(E[X]\right)^2$, then,
+				\begin{align*}
+					\mathrm{Var}[X] &= \frac{d^2\Psi_{X}(t)}{dt^2} - \left(\frac{n}{\lambda}\right)^2 \\
+					&= \frac{n(n+1)\left(\frac{\lambda}{\lambda-t}\right)^n}{\left(\lambda-t\right)^2} - \left(\frac{n}{\lambda}\right)^2 \bigg|_{t=0} \\
+					&= \frac{n(n+1)}{\lambda^2} - \frac{n^2}{\lambda^2} \\
+					&= \frac{n}{\lambda^2}
+				\end{align*}
+		\end{enumerate}
+
+	\subsection*{Problem 4}
+		\begin{enumerate}
+			\item The moment generating function of $Y$ is,
+				\begin{align*}
+					\Psi_{Y}(t) = E[e^{tY}] = E[e^{\sum_{i=1}^{N}X_{i}}]
+				\end{align*}
+				Given that $X_{i}$'s are independent, hence,
+				\begin{align*}
+					\Psi_{Y}(t) &= E[e^{tX_{1}}]E[e^{tX_{2}}]E[e^{tX_{3}}] \ldots E[e^{tX_{N}}] \\
+					&= \prod_{i=1}^{N} \Psi_{X_{i}}(t)
+				\end{align*}
+			%TODO\item 
+		\end{enumerate}
+
+	\subsection*{Problem 5}
+		\begin{enumerate}
+			\item
+				\begin{align*}
+					P\left(\left\{ \text{all five cards are seven} \right\}\right) = 0
+				\end{align*}
+			\item
+				\begin{align*}
+					P\left(\left\{ \text{at least one of the cards is a seven} \right\}\right) &= 1 - \frac{\binom{48}{5}}{\binom{52}{5}}
+					%TODO =
+				\end{align*}
+			\item
+				\begin{align*}
+					P\left(\left\{ \text{none of the cards is a seven} \right\}\right) &= \frac{\binom{48}{5}}{\binom{52}{5}}
+					%TODO =
+				\end{align*}
+			\item
+				\begin{align*}
+					P\left(\left\{ \text{two out of the five cards are sevens} \right\}\right) &= \frac{\binom{3}{2}\binom{48}{5}}{\binom{52}{5}}
+					%TODO =
+				\end{align*}
+		\end{enumerate}
+
+\section*{Simulation-Based Experiments}
+	\subsection*{Problem 7}
+	%TODO
+	\subsection*{Problem 8}
+	%TODO
+	\subsection*{Problem 9}
+	%TODO
 \end{document}
