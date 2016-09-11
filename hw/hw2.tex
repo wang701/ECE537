@@ -61,7 +61,11 @@
 					\implies E[X] = E[Y] = \int_{\mathbb{R}}^{}t \cdot dF(t)
 				\end{gather*}
 				Therefore, the statement is \textbf{true}.
-			%TODO\item
+			\item The statement is \textbf{false}.
+				
+				Say we have r.v.'s $X$, $Y$, and
+				$Z$. $X$ is independent from $Y$. $Y$ is independent from $Z$ and $X = Z$.
+				Then, $X$ is \textbf{not} independent from $Z$.
 		\end{enumerate}
 
 	\subsection*{Problem 2}
@@ -97,7 +101,14 @@
 
 	\subsection*{Problem 3}
 		\begin{enumerate}
-			%TODO\item
+			\item From $E[E[X \mid Y]]$, we can have,
+				\begin{align*}
+					E[E[X \mid Y]] &= \int_{-\infty}^{\infty} E[X \mid Y] dF_{Y}(y) \\
+					&= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}x dF_{X}(x \mid y)dF_{Y}(y) \\
+					&= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}x \frac{dF_{XY}(x,y)}{dF_{Y}(y)} dF_{Y}(y) \\
+					&= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}x dF_{XY}(x,y) \\
+					&= \int_{-\infty}^{\infty}x dF_{X}(x) = E[X]
+				\end{align*}
 			\item From the definition of joint expectation,
 				\begin{align*}
 					E[XY] = \iint_{}xyf_{XY}(x,y) \,dx\,dy
@@ -142,20 +153,57 @@
 					&= \frac{n(n+1)}{\lambda^2} - \frac{n^2}{\lambda^2} \\
 					&= \frac{n}{\lambda^2}
 				\end{align*}
+			\item We need to prove $\mathrm{Var}[X] = E[X^2] - (E[X])^2 = E[\mathrm{Var}(X \mid Y)] + \mathrm{Var}(E[X \mid Y])$.
+
+				From $E[\mathrm{Var}(X \mid Y)]$, we have,
+				\begin{align*}
+					E[\mathrm{Var}(X \mid Y)] &= E[E[(X - E[X \mid Y])^2 \mid Y]] \\
+					&= E[(X - E[X \mid Y])^2] \\
+					&= E[X^2 -2X \cdot E[X \mid Y] + E^2[X \mid Y]] \\
+					&= E[X^2] - 2E[X \cdot E[X \mid Y]] + E[E^2[X \mid Y]]
+				\end{align*}
+				From $\mathrm{Var}(E[X \mid Y])$, we have,
+				\begin{align*}
+					\mathrm{Var}(E[X \mid Y]) &= E[E^2[X \mid Y]] - (E[E[X \mid Y]])^2 \\
+					&= E[E^2[X \mid Y]] - (E[X])^2
+				\end{align*}
+				Then $\mathrm{Var}(X)$ becomes,
+				\begin{align*}
+					\mathrm{Var}(X) &= E[X^2] - 2E[X \cdot E[X \mid Y]] + E[E^2[X \mid Y]] + E[E^2[X \mid Y]] - (E[X])^2 \\
+					&= E[X^2] - 2E[X \cdot E[X \mid Y]] + 2E[E^2[X \mid Y]] - (E[X])^2 \\
+					&= E[X^2] - (E[X])^2 \\
+					&= \mathrm{Var}(X)
+				\end{align*}
 		\end{enumerate}
 
 	\subsection*{Problem 4}
 		\begin{enumerate}
 			\item The moment generating function of $Y$ is,
 				\begin{align*}
-					\Psi_{Y}(t) = E[e^{tY}] = E[e^{\sum_{i=1}^{N}X_{i}}]
+					\Psi_{Y}(t) = E[e^{tY}] = E[e^{t \sum_{i=1}^{N}X_{i}}]
 				\end{align*}
 				Given that $X_{i}$'s are independent, hence,
 				\begin{align*}
 					\Psi_{Y}(t) &= E[e^{tX_{1}}]E[e^{tX_{2}}]E[e^{tX_{3}}] \ldots E[e^{tX_{N}}] \\
-					&= \prod_{i=1}^{N} \Psi_{X_{i}}(t)
+					&= E[E[e^{t \sum_{i=1}^{N}X_{i}} \mid N]] \\
+					&= E[\Psi_{X}(t)^N]
 				\end{align*}
-			%TODO\item 
+			\item For finding $E(Y)$ and x$\mathrm{Var}(Y)$, we can first differentiate $\Psi_{Y}(t)$,
+				\begin{align*}
+					E[Y] &= \Psi'_{Y}(t) \bigg|_{t=0} \\
+					&= E[N \Psi_{X}(t)^{N-1} \Psi'_{X}(t)] \bigg|_{t=0} \\
+					&= E[N]E[X]
+				\end{align*}
+				Also,
+				\begin{align*}
+					E[Y^2] &= \Psi''_{Y}(t) \bigg|_{t=0} \\
+					&= E[N(N-1)\Psi_{X}(t)^{N-2} \Psi'_{X}(t)^2 + N \Psi_{X}(t)^{N-1} \Psi''_{X}(t)] \bigg|_{t=0} \\
+					&= E[N(N-1)E^2[X] + NE[X^2]]
+				\end{align*}
+				Hence,
+				\begin{align*}
+					\mathrm{Var}(X) = E[Y^2] - (E[Y])^2 = ??????
+				\end{align*}
 		\end{enumerate}
 
 	\subsection*{Problem 5}
@@ -166,20 +214,33 @@
 				\end{align*}
 			\item
 				\begin{align*}
-					P\left(\left\{ \text{at least one of the cards is a seven} \right\}\right) &= 1 - \frac{\binom{48}{5}}{\binom{52}{5}}
-					%TODO =
+					P\left(\left\{ \text{at least one of the cards is a seven} \right\}\right) &= 1 - \frac{\binom{48}{5}}{\binom{52}{5}} = 0.341
 				\end{align*}
 			\item
 				\begin{align*}
-					P\left(\left\{ \text{none of the cards is a seven} \right\}\right) &= \frac{\binom{48}{5}}{\binom{52}{5}}
-					%TODO =
+					P\left(\left\{ \text{none of the cards is a seven} \right\}\right) &= \frac{\binom{48}{5}}{\binom{52}{5}} = 0.659
 				\end{align*}
 			\item
 				\begin{align*}
-					P\left(\left\{ \text{two out of the five cards are sevens} \right\}\right) &= \frac{\binom{3}{2}\binom{48}{5}}{\binom{52}{5}}
-					%TODO =
+					P\left(\left\{ \text{two out of the five cards are sevens} \right\}\right) &= \frac{\binom{3}{2}\binom{48}{5}}{\binom{52}{5}} = 0.040
 				\end{align*}
 		\end{enumerate}
+
+	\subsection*{Problem 6}
+		We can obtain from the given cdf,
+		\begin{align*}
+			P(\left\{ X = k \right\}) &= \frac{n!}{k!(n-k)!} p^k (1-p)^{n-k} \\
+			&= \frac{n(n-1)(n-2) \ldots (n-k+1)}{k!} p^k (1-p)^{n-k} \\
+			&= \frac{np(n-1)p(n-2)p \ldots (n-k+1)p}{k!} (1-p)^{n-k} \\
+		\end{align*}
+		As $n \rightarrow \infty$ and $p \rightarrow 0$, $np \rightarrow \lambda$,
+		we can obtain,
+		\begin{align*}
+			P(\left\{ X = k \right\}) &= \frac{\lambda^k}{k!} (1-p)^{n-k} \\
+			&= \frac{\lambda^k}{k!} e^{-\lambda}
+		\end{align*}
+		Hence, we can say that the distribution of the r.v. $X$ converges to that of
+		a Poisson r.v. with mean $\lambda$.
 
 \section*{Simulation-Based Experiments}
 	\subsection*{Problem 7}
