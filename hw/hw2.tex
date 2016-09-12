@@ -18,6 +18,7 @@
 \usepackage{enumitem}
 \usepackage{scrextend}
 \usepackage{siunitx}
+\usepackage{minted}
 
 \usetikzlibrary{shapes.geometric, arrows}
 \tikzstyle{startstop} = [rectangle, rounded corners, minimum width=1cm, minimum height=1cm,text centered, draw=black, fill=white!30]
@@ -155,6 +156,14 @@
 				\end{align*}
 			\item We need to prove $\mathrm{Var}[X] = E[X^2] - (E[X])^2 = E[\mathrm{Var}(X \mid Y)] + \mathrm{Var}(E[X \mid Y])$.
 
+				From $\mathrm{Var}[X] = E[X^2] - (E[X])^2$, we can have,
+				\begin{align*}
+					E[X^2] - (E[X])^2 &= E[E[X^2 \mid Y]] - (E[E[X \mid Y]])^2 \\
+					&= E[\mathrm{Var}[X \mid Y] + (E[X \mid Y])^2] - (E[E[X \mid Y]])^2 \\
+					&= E[\mathrm{Var}[X \mid Y]] + (E[E[X \mid Y]^2] - (E[E[X \mid Y]])^2) \\
+					&= E[\mathrm{Var}[X \mid Y]] + \mathrm{Var}(E[X \mid Y])
+				\end{align*}
+
 				From $E[\mathrm{Var}(X \mid Y)]$, we have,
 				\begin{align*}
 					E[\mathrm{Var}(X \mid Y)] &= E[E[(X - E[X \mid Y])^2 \mid Y]] \\
@@ -202,7 +211,11 @@
 				\end{align*}
 				Hence,
 				\begin{align*}
-					\mathrm{Var}(X) = E[Y^2] - (E[Y])^2 = ??????
+					\mathrm{Var}(Y) &= E[Y^2] - (E[Y])^2 = E[N(N-1)E^2[X] + NE[X^2]] - (E[N]E[X])^2 \\
+					&= E[N(N-1)E^2[X]] + E[NE[X^2]] - E^2[N]E^2[X] \\
+					&= E[N](E[N] - 1)E[E^2[X]] + E[N]E[E[X^2]] - E^2[N]E^2[X] \\
+					&= E^2[N](E[E^2[X]] - E^2[X]) - E[N](E[E^2[X]] - E[E[X^2]]) \\
+					&= E^2[N]\mathrm{Var}(E[X]) + E[N](E[\mathrm{Var}(X)])
 				\end{align*}
 		\end{enumerate}
 
@@ -246,7 +259,44 @@
 	\subsection*{Problem 7}
 	%TODO
 	\subsection*{Problem 8}
-	%TODO
+		\begin{figure}[!hbt]
+			\centering
+			\begin{subfigure}[!hbt]{0.45\linewidth}
+				\centering
+				\includegraphics[width=1\linewidth]{hw2_8_exp_n100.png}
+				\caption{Cdf using $N = 100$.}
+			\end{subfigure}
+			\begin{subfigure}[!hbt]{0.45\linewidth}
+				\centering
+				\includegraphics[width=1\linewidth]{hw2_8_exp_n1000.png}
+				\caption{Cdf using $N = 1000$.}
+			\end{subfigure}
+			\caption{The cdf plots of exponential random variable $X$.}
+		\end{figure}
+		When $N = 100$, the cdf follows the trend of the actual exponential
+		distribution but does not fit entirely. When using 1000 samples, the cdf
+		fits nicely. $E[X] = ???$.
+		\begin{figure}[!hbt]
+			\centering
+			\begin{subfigure}[!hbt]{0.45\linewidth}
+				\centering
+				\includegraphics[width=1\linewidth]{hw2_8_exp_n100.png}
+				\caption{Cdf using $N = 100$.}
+			\end{subfigure}
+			\begin{subfigure}[!hbt]{0.45\linewidth}
+				\centering
+				\includegraphics[width=1\linewidth]{hw2_8_exp_n1000.png}
+				\caption{Cdf using $N = 1000$.}
+			\end{subfigure}
+			\caption{The cdf plots of poisson random variable $Y$.}
+		\end{figure}
+		When $N = 100$, the cdf follows the trend of the actual exponential
+		distribution but does not fit entirely. When using 1000 samples, the cdf
+		fits nicely. $E[X] = ???$.
 	\subsection*{Problem 9}
 	%TODO
+
+\section*{MATLAB Code}
+		\inputminted[tabsize=2,breaklines]{matlab}{hw2.m}
+
 \end{document}
