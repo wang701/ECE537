@@ -50,12 +50,18 @@
 \section*{Probability Review Problems}
 	\subsection*{Problem 1}
 		\begin{enumerate}
-			\item Since $X$ and $Y$ have identical distributions,
-				\begin{gather*}
-					P(\left\{X \in A\right\}) = P(\left\{Y \in A\right\}), A \in \mathbb{R} \\
-					\implies X = Y
-				\end{gather*}
-				Therefore, the statement is \textbf{true}.
+			\item Since $X$ and $Y$ have identical distributions, for example,
+				\begin{align*}
+					P(\left\{ X = 0 \right\}) &= P(\left\{ X = 1 \right\}) = 0.5
+				\end{align*}
+				Let $Y = 1 - X$,
+				\begin{align*}
+					P(\left\{ Y = 0 \right\}) &= P(\left\{ X = 1 \right\}) = 0.5 \\
+					P(\left\{ Y = 1 \right\}) &= P(\left\{ X = 0 \right\}) = 0.5
+				\end{align*}
+				But $Y \neq X$.
+
+				Therefore, the statement is \textbf{false}.
 			\item Since $X$ and $Y$ have identical distributions,
 				let $F(t) = P(\left\{X \leq t\right\}) = P(\left\{Y \leq t\right\})$,
 				\begin{gather*}
@@ -76,7 +82,8 @@
 				\begin{align*}
 					E[X] &= \int_{0}^{\infty} xf_{X}(x)dx \\
 					&= \int_{0}^{\infty} xdF_{X}(x) \\
-					&= -\int_{0}^{\infty} xd\bar{F}_X(x) \\
+					&= -\int_{0}^{\infty} x (- d{F}_X(x)) \\
+					&= -\int_{0}^{\infty} xd\bar{F}_X(x)
 				\end{align*}
 				Using integration by parts,
 				let $u = x$, $du = dx$, $dv = d\bar{F}_{X}(x)$, then $v = \bar{F}_{X}(x)$,
@@ -163,26 +170,6 @@
 					&= E[\mathrm{Var}[X \mid Y]] + (E[E[X \mid Y]^2] - (E[E[X \mid Y]])^2) \\
 					&= E[\mathrm{Var}[X \mid Y]] + \mathrm{Var}(E[X \mid Y])
 				\end{align*}
-
-				From $E[\mathrm{Var}(X \mid Y)]$, we have,
-				\begin{align*}
-					E[\mathrm{Var}(X \mid Y)] &= E[E[(X - E[X \mid Y])^2 \mid Y]] \\
-					&= E[(X - E[X \mid Y])^2] \\
-					&= E[X^2 -2X \cdot E[X \mid Y] + E^2[X \mid Y]] \\
-					&= E[X^2] - 2E[X \cdot E[X \mid Y]] + E[E^2[X \mid Y]]
-				\end{align*}
-				From $\mathrm{Var}(E[X \mid Y])$, we have,
-				\begin{align*}
-					\mathrm{Var}(E[X \mid Y]) &= E[E^2[X \mid Y]] - (E[E[X \mid Y]])^2 \\
-					&= E[E^2[X \mid Y]] - (E[X])^2
-				\end{align*}
-				Then $\mathrm{Var}(X)$ becomes,
-				\begin{align*}
-					\mathrm{Var}(X) &= E[X^2] - 2E[X \cdot E[X \mid Y]] + E[E^2[X \mid Y]] + E[E^2[X \mid Y]] - (E[X])^2 \\
-					&= E[X^2] - 2E[X \cdot E[X \mid Y]] + 2E[E^2[X \mid Y]] - (E[X])^2 \\
-					&= E[X^2] - (E[X])^2 \\
-					&= \mathrm{Var}(X)
-				\end{align*}
 		\end{enumerate}
 
 	\subsection*{Problem 4}
@@ -250,14 +237,28 @@
 		we can obtain,
 		\begin{align*}
 			P(\left\{ X = k \right\}) &= \frac{\lambda^k}{k!} (1-p)^{n-k} \\
-			&= \frac{\lambda^k}{k!} e^{-\lambda}
+			&= \frac{\lambda^k}{k!} (1- \frac{\lambda}{n})^{n-k} \\ 
+		\end{align*}
+		By Exponential as the Limit of Sequence,
+		\begin{align*}
+			P(\left\{ X = k \right\}) = \frac{\lambda^k}{k!} e^{-\lambda}
 		\end{align*}
 		Hence, we can say that the distribution of the r.v. $X$ converges to that of
 		a Poisson r.v. with mean $\lambda$.
 
 \section*{Simulation-Based Experiments}
 	\subsection*{Problem 7}
-	%TODO
+		10 samples of $X$:
+		\begin{gather*}
+			X = \\
+			\text{3.2939 11.7642 15.4612 21.4437 10.1252 11.0017 4.9629 45.1792 24.2437 5.8883}
+		\end{gather*}
+		10 samples of $Y$:
+		\begin{gather*}
+			Y = \\
+			\text{11 12 18 9 19 14 10 10 12 12}
+		\end{gather*}
+		No interesting patterns can be observed in this case.
 	\subsection*{Problem 8}
 		\begin{figure}[!hbt]
 			\centering
@@ -274,27 +275,45 @@
 			\caption{The cdf plots of exponential random variable $X$.}
 		\end{figure}
 		When $N = 100$, the cdf follows the trend of the actual exponential
-		distribution but does not fit entirely. When using 1000 samples, the cdf
-		fits nicely. $E[X] = ???$.
+		distribution but does not fit entirely. $E[X] = 9.6988$. When using 1000
+		samples, the cdf fits nicely. $E[X] = 9.7967$.
+
+	\pagebreak
+
 		\begin{figure}[!hbt]
 			\centering
 			\begin{subfigure}[!hbt]{0.45\linewidth}
 				\centering
-				\includegraphics[width=1\linewidth]{hw2_8_exp_n100.png}
+				\includegraphics[width=1\linewidth]{hw2_8_poi_n100.png}
 				\caption{Cdf using $N = 100$.}
 			\end{subfigure}
 			\begin{subfigure}[!hbt]{0.45\linewidth}
 				\centering
-				\includegraphics[width=1\linewidth]{hw2_8_exp_n1000.png}
+				\includegraphics[width=1\linewidth]{hw2_8_poi_n1000.png}
 				\caption{Cdf using $N = 1000$.}
 			\end{subfigure}
 			\caption{The cdf plots of poisson random variable $Y$.}
 		\end{figure}
+
 		When $N = 100$, the cdf follows the trend of the actual exponential
-		distribution but does not fit entirely. When using 1000 samples, the cdf
-		fits nicely. $E[X] = ???$.
+		distribution but does not fit entirely. $E[X] = 12.250$. When using 1000
+		samples, the cdf fits nicely. $E[X] = 12.028$.
 	\subsection*{Problem 9}
-	%TODO
+		\begin{figure}[!hbt]
+			\centering
+			\begin{subfigure}[!hbt]{0.45\linewidth}
+				\centering
+				\includegraphics[width=1\linewidth]{hw2_9_poi_pmf_n100.png}
+				\caption{Pmf using $N = 100$.}
+			\end{subfigure}
+			\begin{subfigure}[!hbt]{0.45\linewidth}
+				\centering
+				\includegraphics[width=1\linewidth]{hw2_9_poi_pmf_n1000.png}
+				\caption{Pmf using $N = 1000$.}
+			\end{subfigure}
+			\caption{The pmf plots of poisson random variable $Z$.}
+		\end{figure}
+		When $N = 1000$, the pmf of $Z$ fits more like a Poisson pmf. $E[Z] = 9.860$.
 
 \section*{MATLAB Code}
 		\inputminted[tabsize=2,breaklines]{matlab}{hw2.m}
