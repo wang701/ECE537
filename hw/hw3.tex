@@ -1,0 +1,124 @@
+%-----------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%-----------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{amsmath} % Required for some math elements
+\usepackage{amssymb}
+\usepackage{grffile}
+\usepackage[export]{adjustbox}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{listings}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{scrextend}
+\usepackage{siunitx}
+\usepackage{minted}
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=1cm, minimum height=1cm,text centered, draw=black, fill=white!30]
+\tikzstyle{process} = [rectangle, minimum width=1cm, minimum height=1cm, text centered, draw=black, fill=white!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+%-----------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%-----------------------------------------------------------------------------
+
+\title{ECE 547 Fall 2016 Homework 3} % Title
+
+\author{Yang \textsc{Wang}}  % Author name
+
+\date{\today} % Date for the report
+
+\renewcommand{\theenumi}{\alph{enumi}} % use letters for list items
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+%-----------------------------------------------------------------------------
+%	Problem 1
+%-----------------------------------------------------------------------------
+
+\section*{Analytical Questions}
+	\subsection*{Problem 1}
+
+		Propagation Delay: the amount of time needed for traveling to McDonald's and
+		back to the office. \\
+		Transmission Delay: the amount of time needed for consuming the food. \\
+		Processing Delay: the amount of time needed for choosing the meal. \\
+		Queueing Delay: the amount of time needed for waiting up in line to order.
+
+	\subsection*{Problem 2}
+	%TODO
+
+	\subsection*{Problem 3}
+
+		Let $A = \left\{ \text{one packet arrive at the node successfully} \mid \text{packet has length } n \right\}$,
+		\begin{gather*}
+			\implies P(A) = (1-p)^{n}
+		\end{gather*}
+
+		Let $B = \left\{ \text{packets arrive at the node successfully} \right\}$
+		and $C = \left\{ \text{packet has length } n \right\} $,
+		\begin{align*}
+			\implies P(B) &= \sum_{n = 0}^{\infty} P(A) \cdot P(C) \\
+			&= \sum_{n = 0}^{\infty} (1-p)^{n} \frac{\mu^{n}e^{-\mu}}{n!} \\
+			&= e^{-\mu} \sum_{n = 0}^{\infty} (1-p)^{n} \frac{\mu^{n}}{n!} \\
+			&= e^{-\mu p} \sum_{n = 0}^{\infty} e^{-\mu (1-p)} \frac{((1-p)\mu)^{n}}{n!} \\
+			&= e^{-\mu p} \cdot 1 \\
+			&= e^{-\mu p}
+		\end{align*}
+
+		Therefore, the rate at which succcessful packets arrive the network node is:
+		\begin{align*}
+			\text{rate} = e^{-\mu p} \cdot \lambda
+		\end{align*}
+
+	\section*{Problem 4}
+	%TODO
+
+	\section*{Problem 5}
+		\begin{enumerate}
+			\item We need to obatin $(\lambda + \mu) p_{n} = \lambda p_{n-1} + \mu p_{n+1}$
+				for $n \geqslant 1$. From Schwartz 2-12, we already have,
+				\begin{gather*}
+					p_{n}(t + \Delta t) = p_{n}(t) [ (1 - \lambda \Delta t)(1 - \mu \Delta t) + \mu \Delta t \cdot \lambda \Delta t + o(\Delta t) ] \\
+					+ p_{n-1}(t) [ \lambda \Delta t (1 - \mu \Delta t) + o(\Delta t) ] \\
+					+ p_{n+1}(t) [ \mu \Delta t (1 - \lambda \Delta t) + o(\Delta t) ]
+				\end{gather*}
+				We can factor the $(\Delta t)^{2}$ terms into $o(\Delta t)$ since they
+				are usually very small,
+				\begin{gather*}
+					\implies p_{n}(t + \Delta t) = p_{n}(t) [1 - (\lambda + \mu) \Delta t] + p_{n-1}(t) (\lambda \Delta t) + p_{n+1}(t) (\mu \Delta t)
+				\end{gather*}
+				From Taylor Series,
+				\begin{align*}
+					p_{n}(t + \Delta t) &= p_{n}(t) + \frac{dp_{n}(t)}{dt} \Delta t \\
+					\implies \frac{dp_{n}(t)}{dt} &= (-\lambda + \mu) p_{n}(t) + \lambda p_{n-1}(t) + \mu p_{n+1}(t)
+				\end{align*}
+				We want to find the steady state value of $p_{n}$, hence by setting $\frac{dp_{n}(t)}{dt} = 0$,
+				\begin{align*}
+					(\lambda + \mu) p_{n} = \lambda p_{n-1} + \mu p_{n+1}, n \geqslant 1
+				\end{align*}
+			\item %TODO
+		\end{enumerate}
+
+\section*{Simulation-Based Experiments}
+	\subsection*{Problem 1}
+	%TODO
+
+	\subsection*{Problem 2}
+	%TODO
+
+	\subsection*{Problem 3}
+	%TODO
+
+\end{document}
