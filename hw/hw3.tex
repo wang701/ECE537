@@ -83,33 +83,104 @@
 		\end{align*}
 
 	\section*{Problem 4}
-	%TODO
 
+		We are given that $\tau_{1}$ and $\tau_{2}$ are independent, exponential
+		distribution with mean $\frac{1}{\lambda_{1}}$ and $\frac{1}{\lambda_{2}}$.
+		Therefore, we can write,
+		\begin{align*}
+			P(\left\{ \tau_{1}  \geqslant t \right\}) &= e^{-\lambda_{1} t} \\
+			P(\left\{ \tau_{2}  \geqslant t \right\}) &= e^{-\lambda_{2} t}
+		\end{align*}
+		We can also write,
+		\begin{align*}
+			P(\left\{ \text{min}(\tau_{1}, \tau_{2}) \right\}) &= P(\left\{ \tau_{1} \geqslant t, \tau_{2} \geqslant t  \right\}) \\
+			&= P(\left\{ \tau_{1} \geqslant t \right\}) \cdot P(\left\{ \tau_{2} \geqslant t \right\}) \\
+			&= e^{-(\lambda_{1} + \lambda_{2})t}
+		\end{align*}
+		Hence, we can say that r.v. min$(\tau_{1}, \tau_{2})$ is exponentially
+		distributed with mean $\frac{1}{\lambda_{1} + \lambda_{2}}$.
+
+		For showing $P(\left\{ \lambda_{1} < \lambda_{2} \right\}) = \frac{\lambda_{1}}{\lambda_{1} + \lambda_{2}}$,
+		we first know the event $\left\{ \lambda_{1} < \lambda_{2} \right\}$ is
+		equivalent as $\left\{ \lambda_{1} < t \mid t = \lambda_{2} \right\}$. Hence,
+		we can write,
+		\begin{align*}
+			P(\left\{ \lambda_{1} < \lambda_{2} \right\}) &= P(\left\{ \lambda_{1} < t \mid t = \lambda_{2} \right\}) \\
+			&= \int_{0}^{\infty} P(\left\{ \lambda_{1} < t \right\}) f_{\tau_{2}}(t)dt \\
+			&= \int_{0}^{\infty} (1 - e^{-\lambda_{1}t}) \lambda_{2}e^{-\lambda_{2}t}dt \\
+			&= \lambda_{2} \int_{0}^{\infty} (1 - e^{-\lambda_{1}t}) e^{-\lambda_{2}t}dt \\
+			&= \lambda_{2} \int_{0}^{\infty} (e^{-\lambda_{2}t} - e^{-(\lambda_{1} + \lambda_{2})})dt \\
+			&= \lambda_{2} (\frac{e^{-\lambda_{2}t}}{\lambda_{2}} - \frac{e^{-(\lambda_{1} + \lambda_{2})}}{-(\lambda_{1} + \lambda_{2})}) \bigg|_{0}^{\infty} \\
+			&= 1 - \frac{\lambda_{2}}{\lambda_{1} + \lambda_{2}} \\
+			&= \frac{\lambda_{1}}{\lambda_{1} + \lambda_{2}}
+		\end{align*} 
 	\section*{Problem 5}
-		\begin{enumerate}
-			\item We need to obatin $(\lambda + \mu) p_{n} = \lambda p_{n-1} + \mu p_{n+1}$
-				for $n \geqslant 1$. From Schwartz 2-12, we already have,
-				\begin{gather*}
-					p_{n}(t + \Delta t) = p_{n}(t) [ (1 - \lambda \Delta t)(1 - \mu \Delta t) + \mu \Delta t \cdot \lambda \Delta t + o(\Delta t) ] \\
-					+ p_{n-1}(t) [ \lambda \Delta t (1 - \mu \Delta t) + o(\Delta t) ] \\
-					+ p_{n+1}(t) [ \mu \Delta t (1 - \lambda \Delta t) + o(\Delta t) ]
-				\end{gather*}
-				We can factor the $(\Delta t)^{2}$ terms into $o(\Delta t)$ since they
-				are usually very small,
-				\begin{gather*}
-					\implies p_{n}(t + \Delta t) = p_{n}(t) [1 - (\lambda + \mu) \Delta t] + p_{n-1}(t) (\lambda \Delta t) + p_{n+1}(t) (\mu \Delta t)
-				\end{gather*}
-				From Taylor Series,
-				\begin{align*}
-					p_{n}(t + \Delta t) &= p_{n}(t) + \frac{dp_{n}(t)}{dt} \Delta t \\
-					\implies \frac{dp_{n}(t)}{dt} &= (-\lambda + \mu) p_{n}(t) + \lambda p_{n-1}(t) + \mu p_{n+1}(t)
-				\end{align*}
-				We want to find the steady state value of $p_{n}$, hence by setting $\frac{dp_{n}(t)}{dt} = 0$,
-				\begin{align*}
-					(\lambda + \mu) p_{n} = \lambda p_{n-1} + \mu p_{n+1}, n \geqslant 1
-				\end{align*}
-			\item %TODO
-		\end{enumerate}
+		\subsection*{Schwartz 2-6}
+			\begin{enumerate}
+				\item We need to obatin $(\lambda + \mu) p_{n} = \lambda p_{n-1} + \mu p_{n+1}$
+					for $n \geqslant 1$. From Schwartz 2-12, we already have,
+					\begin{gather*}
+						p_{n}(t + \Delta t) = p_{n}(t) [ (1 - \lambda \Delta t)(1 - \mu \Delta t) + \mu \Delta t \cdot \lambda \Delta t + o(\Delta t) ] \\
+						+ p_{n-1}(t) [ \lambda \Delta t (1 - \mu \Delta t) + o(\Delta t) ] \\
+						+ p_{n+1}(t) [ \mu \Delta t (1 - \lambda \Delta t) + o(\Delta t) ]
+					\end{gather*}
+					We can factor the $(\Delta t)^{2}$ terms into $o(\Delta t)$ since they
+					are usually very small,
+					\begin{gather*}
+						\implies p_{n}(t + \Delta t) = p_{n}(t) [1 - (\lambda + \mu) \Delta t] + p_{n-1}(t) (\lambda \Delta t) + p_{n+1}(t) (\mu \Delta t)
+					\end{gather*}
+					From Taylor Series,
+					\begin{align*}
+						p_{n}(t + \Delta t) &= p_{n}(t) + \frac{dp_{n}(t)}{dt} \Delta t \\
+						\implies \frac{dp_{n}(t)}{dt} &= (-\lambda + \mu) p_{n}(t) + \lambda p_{n-1}(t) + \mu p_{n+1}(t)
+					\end{align*}
+					We want to find the steady state value of $p_{n}$, hence by setting $\frac{dp_{n}(t)}{dt} = 0$,
+					\begin{align*}
+						(\lambda + \mu) p_{n} = \lambda p_{n-1} + \mu p_{n+1}, n \geqslant 1
+					\end{align*}
+				\item From Fig. 2-11 in Schwartz textbook, we can use the Conservation
+					of Rates (i.e., the rate going \textbf{in} a node equals to the rate
+					going \textbf{out} of a node) to set up our equation which is just,
+					\begin{align*}
+						p_{n-1}\lambda + p_{n+1}\mu = p_{n}(\lambda + \mu)
+					\end{align*}
+			\end{enumerate}
+		\subsection*{Schwartz 2-8}
+			For the M/M/1 queue analysis, we have the stationary state probability $p_{n} = \rho^{n} p_{0}$,
+			where $\rho = \frac{\lambda}{\mu}$.
+			\begin{enumerate}
+				\item Show that the stationary state probability satisfies Eq. 2-15.
+				%TODO
+				\item For showing $\lambda p_{n} = \mu p_{n+1}$ satifies Eq. 2-15, we
+					can first start by examining Eq. 2-15,
+					\begin{align*}
+						(\lambda + \mu) p_{n} &= \lambda p_{n-1} + \mu p_{n+1} \\
+						\implies \lambda p_{n} - \mu p_{n+1} &= \lambda p_{n-1} - \mu p_{n}
+					\end{align*}
+					As proved in class, $\lambda p_{n-1} - \mu p_{n} = 0$, hence,
+					\begin{gather*}
+						\lambda p_{n} - \mu p_{n+1} = 0 \\
+						\implies \lambda p_{n} = \mu p_{n+1} 
+					\end{gather*}
+					As a result, the stationary state probability satisfies Eq. 2-15.
+				\item We need to calculate $p_{0}$ for the M/M/1/N queu and show that $p_{n}$
+					is given by Eq. 2-20 in Schwartz.
+					From the class notes, we already showed that the stationary state
+					probability for M/M/1/N queue is $p_{n} = (\frac{\lambda}{\mu})^n p_{0}$,
+					therefore, by normalizing $p_{n}$, we get,
+					\begin{align*}
+						\sum_{n=0}^{N} p_{n} &= \sum_{n=0}^{N} (\frac{\lambda}{\mu})^n p_{0} \\
+						&= p_{0} \sum_{n=0}^{N} \rho^{n} \\
+						&= p_{0} \frac{1 - \rho^{N+1}}{1 - \rho} \\
+						&= 1
+					\end{align*}
+					Hence,
+					\begin{gather*}
+						p_{0} = (\frac{1 - \rho^{N+1}}{1 - \rho})^{-1}
+					\end{gather*}
+					We can then substitute $p_{0}$ into the stationary state probability
+					to obatin Eq. 2-20.
+			\end{enumerate}
 
 \section*{Simulation-Based Experiments}
 	\subsection*{Problem 1}
