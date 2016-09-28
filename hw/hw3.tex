@@ -150,7 +150,13 @@
 			where $\rho = \frac{\lambda}{\mu}$.
 			\begin{enumerate}
 				\item Show that the stationary state probability satisfies Eq. 2-15.
-				%TODO
+					We can plug in the stationary state probability $p_{n} = \rho^{n} p_{0}$
+					into Eq. 2-15 to verify the equation holds:
+					\begin{align*}
+						(\lambda + \mu) p_{n} &= \mu \rho^{n+1} p_{0} + \lambda \rho^{n-1} p_{0} \\
+						&= \mu p_{n+1} + \lambda p_{n-1}
+					\end{align*}
+					Hence, $p_{n}$ satisfies Eq. 2-15.
 				\item For showing $\lambda p_{n} = \mu p_{n+1}$ satifies Eq. 2-15, we
 					can first start by examining Eq. 2-15,
 					\begin{align*}
@@ -184,12 +190,80 @@
 
 \section*{Simulation-Based Experiments}
 	\subsection*{Problem 1}
-	%TODO
+		\begin{figure}[!hbt]
+			\centering
+			\includegraphics[width=0.5\linewidth]{hw3_1_nt.png}
+			\caption{Poisson process $N(t)$ over t = [0, 100] when $\lambda=5$}
+		\end{figure}
+
+		We already know that the inter-arrival time is exponentially distributed.
+		Hence, for generating a Poisson process, one way is to generate the arrival
+		times when arrival occurs. When we obtain the event times, we can find the
+		corresponding number of arrivals given a time $t$. A couple of values of $t$
+		are used to simulate the Poisson process but only when $t=100$ is given in
+		Figure 1. The pattern is rather clear: N(t) converges to a large number as t
+		goes to infinity.
 
 	\subsection*{Problem 2}
-	%TODO
+		\begin{figure}[!hbt]
+			\centering
+			\includegraphics[width=0.5\linewidth]{hw3_2_pn.png}
+			\caption{Verification of r.v. $X$ is Poisson distributed.}
+		\end{figure}
+
+		From the MATLAB simulations, we get $E[X]=5.1300$. We can further verify
+		that $X$ is a Poisson distribution by plotting its distribution as in
+		Figure 2.
 
 	\subsection*{Problem 3}
-	%TODO
+		The problem essentially requires us to simulate the M/M/1 queueing system.
+		At first glance, we have a fixed arrival rate of $\lambda=5$ and three
+		different service rate $\mu$ values which are 4, 6, and 10. Intuitively,
+		since the system has 1 server and an infinite buffer. When $\mu = 4$, that
+		means the service rate cannot keep up with the arrival rate, hence, the
+		packets in the infinite buffer will build up to a very large number. On the
+		other hand, for $\mu = 10$, the service rate is twice as big as the arrival
+		rate, hence, for every packet that arrives into the system, the packet is
+		served immediately and hence, no buffer space is filled which infers that
+		the average number of packets will be very low (approximately 0). When $\mu = 6$,
+		the system will follow very closely to a Poisson process and the average
+		number of packets should be bigger than 0 but much less than when $\mu = 4$.
+		We can verify our intuitions by simulating the M/M/1 queue using different
+		values of $\mu$. Please see the figures on the next page. Also from MATLAB
+		simulation results,
+		\begin{gather*}
+			E[n]_{\mu = 6} = 2.0918 \\ 
+			E[n]_{\mu = 4} = 1884.9 \\ 
+			E[n]_{\mu = 10} = 0 
+		\end{gather*}
+
+		\begin{figure}[!hbt]
+			\centering
+			\begin{subfigure}[!hbt]{0.45\linewidth}
+				\centering
+				\includegraphics[width=1\linewidth]{hw3_3_nt_m10.png}
+				\caption{$n(t)$ when $\mu = 10$.}
+			\end{subfigure}
+			\begin{subfigure}[!hbt]{0.45\linewidth}
+				\centering
+				\includegraphics[width=1\linewidth]{hw3_3_nt_m4.png}
+				\caption{$n(t)$ when $\mu = 4$.}
+			\end{subfigure}
+			\caption{$n(t)$ for $\mu = 10$ and $4$.}
+		\end{figure}
+
+		\vfill
+
+		\begin{figure}[!hbt]
+			\centering
+			\includegraphics[width=0.5\linewidth]{hw3_3_nt_m6.png}
+			\caption{$n(t)$ when $\mu = 6$.}
+		\end{figure}
+		\begin{figure}[!hbt]
+			\centering
+			\includegraphics[width=0.5\linewidth]{hw3_3_pn_l5m6.png}
+			\caption{Distribution of $P_n$ for all n.}
+		\end{figure}
+
 
 \end{document}
