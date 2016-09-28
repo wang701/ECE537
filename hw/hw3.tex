@@ -57,7 +57,50 @@
 		Queueing Delay: the amount of time needed for waiting up in line to order.
 
 	\subsection*{Problem 2}
-	%TODO
+		\subsubsection*{Deriving I from II}
+			From Definition I, we have $P(\left\{ N(t) = 1 \right\}) = \lambda t + o(t)$.
+			And from Definition II, we have,
+			\begin{align*}
+				P(\left\{ N(t) = 1 \right\}) &= e^{-\lambda t} \frac{(\lambda t)^1}{1!} \\
+				&= \lambda t (1 - \lambda t + \frac{(\lambda t)^2}{2!} + \ldots ) \\
+				&= \lambda t + o(t)
+			\end{align*}
+			In addition, from Definition I, we have $P(\left\{ N(t) \geqslant 2 \right\}) = o(h)$.
+			Using Defintion II, we have,
+			\begin{align*}
+				P(\left\{ N(t) \geqslant 2 \right\}) &= \sum_{n=2}^{\infty} e^{-\lambda t} \frac{(\lambda t)^n}{n!} \\
+				&= e^{\lambda t} (\frac{(\lambda t)^2}{2!} + \frac{(\lambda t)^3}{3!} + \ldots) \\
+				&= o(t)
+			\end{align*}
+			Hence, Definition I  and II are equivalent.
+		\subsubsection*{Deriving II from I}
+			Using the hint provided, we have,
+			\begin{gather*}
+				\frac{P_{0}(t+h) - P_{0}(t)}{h} = -\lambda P_{0}(t) + \frac{o(h)}{h}
+			\end{gather*}
+			As h goes to 0, we can have,
+			\begin{align*}
+				\frac{dP_{0}(t)}{dt} &= -\lambda P_{0}(t) \\
+				\implies P_{0}(t) &= e^{-\lambda t}
+			\end{align*}
+			Now we need to solve the case when $n \geqslant 1$.
+			\begin{align*}
+				P_{n}(t+h) &= P(\left\{ N(t) = n, N(t+h) - N(t) = 0 \right\}) \\
+				&+ P(\left\{ N(t) = n - 1, N(t+h) - N(t) = 1 \right\}) \\
+				&+ P(\left\{ N(t) = n, N(t+h) - N(t) \geqslant 2 \right\}) \\
+				&= P_{n}(t)P_{0}(h) + P_{n-1}(t)P_{1}(h) + o(h) \\
+				&= (1 - \lambda h)P_{0}(t) + \lambda h P_{n-1}(t) + o(h) \\
+				\implies \frac{P_{n}(t+h) - P_{n}(t)}{h} &= -\lambda P_{n}(t) + \lambda P_{n-1}(t) + \frac{o(h)}{h}
+			\end{align*}
+			As h goes to 0, we have this differential equation,
+			\begin{align*}
+				\frac{dP_{n}(t)}{dt} &= -\lambda P_{n}(t) + \lambda P_{n-1}(t)
+			\end{align*}
+			By solving this equation, we got,
+			\begin{align*}
+				P_{n}(t) = e^{-\lambda t} \frac{(\lambda t)^n}{n!}
+			\end{align*}
+			Hence, Definition I and II are equivalent.
 
 	\subsection*{Problem 3}
 
@@ -82,7 +125,7 @@
 			\text{rate} = e^{-\mu p} \cdot \lambda
 		\end{align*}
 
-	\section*{Problem 4}
+	\subsection*{Problem 4}
 
 		We are given that $\tau_{1}$ and $\tau_{2}$ are independent, exponential
 		distribution with mean $\frac{1}{\lambda_{1}}$ and $\frac{1}{\lambda_{2}}$.
@@ -114,8 +157,8 @@
 			&= 1 - \frac{\lambda_{2}}{\lambda_{1} + \lambda_{2}} \\
 			&= \frac{\lambda_{1}}{\lambda_{1} + \lambda_{2}}
 		\end{align*} 
-	\section*{Problem 5}
-		\subsection*{Schwartz 2-6}
+	\subsection*{Problem 5}
+		\subsubsection*{Schwartz 2-6}
 			\begin{enumerate}
 				\item We need to obatin $(\lambda + \mu) p_{n} = \lambda p_{n-1} + \mu p_{n+1}$
 					for $n \geqslant 1$. From Schwartz 2-12, we already have,
@@ -145,7 +188,7 @@
 						p_{n-1}\lambda + p_{n+1}\mu = p_{n}(\lambda + \mu)
 					\end{align*}
 			\end{enumerate}
-		\subsection*{Schwartz 2-8}
+		\subsubsection*{Schwartz 2-8}
 			For the M/M/1 queue analysis, we have the stationary state probability $p_{n} = \rho^{n} p_{0}$,
 			where $\rho = \frac{\lambda}{\mu}$.
 			\begin{enumerate}
