@@ -22,8 +22,8 @@
 
 \usetikzlibrary{shapes.geometric, arrows}
 \tikzstyle{startstop} = [rectangle, rounded corners, minimum width=1cm, minimum height=1cm,text centered, draw=black, fill=white!30]
-\tikzstyle{process} = [rectangle, minimum width=1cm, minimum height=1cm, text centered, draw=black, fill=white!30]
-\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{process} = [rectangle, minimum width=1.5cm, minimum height=1cm, text centered, draw=black, fill=white!30]
+\tikzstyle{arrow} = [thick,<->,>=stealth]
 
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
 
@@ -55,8 +55,8 @@
 		v_{prop} &= 1.5e4 \text{ km/sec} \\
 		t_{proc} &= 30e-3 \text{ sec} \\
 		p_b &= 1e-5 \\
-		C1 &= 1200 \text{ bps} \\
-		C2 &= 9600 \text{ bps}
+		C_1 &= 1200 \text{ bps} \\
+		C_2 &= 9600 \text{ bps}
 	\end{align*}
 	Using Eq. (4-10) in the Schwartz textbook and MATLAB, we can obtain the
 	following plot.
@@ -83,6 +83,14 @@
 			N &= \text{total number of retransmission for the frame} \\
 			p &= \text{frame error}
 		\end{align*}
+		We are given that $t_{\text{out}} > t_{\text{ack}}$, then we can have,
+		\begin{align*}
+			E[t_{v} | N = 0] &= t_I + t_{\text{ack}} \\
+			E[t_{v} | N = 1] &= t_I + t_{\text{out}} + t_I + t_{\text{ack}} \\
+			&= 2t_I + t_{\text{out}} + t_{\text{ack}} \\
+			&\ldots \\
+			E[t_{v} | N = n] &= (n+1)t_I + nt_{\text{out}} + t_{\text{ack}}
+		\end{align*}
 		From the Law of Total Expectation,
 		\begin{align*}
 			E[t_v] &= E[E[t_v | N]] \\
@@ -106,8 +114,35 @@
 		\end{align*}
 		%For comparison, plot new lambda_max
 	\subsection*{Part (b)}
-	%TODO
-
+		Using the same method in Part (a), the expected value of the time needed
+		for a correct transmission is given by,
+		\begin{align*}
+			E[t_v | N = 0] &= t_I \\
+			E[t_v | N = 1] &= t_I + t_{\text{out}} + t_I = t_T + t_I \\
+			E[t_v | N = 1] &= 2t_T + t_I \\
+			&\ldots \\
+			E[t_v | N = n] &= nt_T + t_I
+		\end{align*}
+		We can easily observe that the expected values are \textbf{independent} of
+		$t_{ack}$ since Go-Back-N scheme do not wait for acknowledgements unless
+		maximum number of frames are reached. By applying the Law of Total
+		Expectation,
+		\begin{align*}
+			E[t_v] &= \sum_{n=0}^{\infty} (nt_T + t_I) \cdot p^{n}(1-p) \\
+			&= t_I + t_T \frac{p}{1-p}
+		\end{align*}
+		Then, maximum throughput is given by,
+		\begin{equation}
+			\lambda_{max} = \frac{1-p}{t_I(1 - (a-1)p)}
+		\end{equation}
+		\begin{align*}
+			\text{where } a = \frac{t_T}{t_I} 
+		\end{align*}
+		Equation (3) still applies to the procedure used here
+		($t_{\text{out}} > t_{\text{ack}}$) because Go-Back-N does not wait for
+		acknowledegements to send frames. The throughput of Go-Back-N without NACK
+		is potentially greater than Go-Back-N with NACK since we need to take in
+		the delay after the frame is acked to retransmit new frames.
 \section*{Schwartz 4-4}
 	\subsection*{Part (a)}
 		The protocol will work correctly. With $t_{\text{ack}} > t_{\text{out}}$,
@@ -154,5 +189,12 @@
 	$l_{\text{opt}} \approx 2167$ which matches the general trend in Figure 4-8.
 
 \section*{Schwartz 4-17}
+	There can be only $(M-1)$ unacknowledged frames in the system. This is because
+	if there is $M$ \textbf{unacknowledged} frames, it would confuse the sender.
+	For example, if the sender sends 4 frames, with sequence number goes from 0 to
+	3. If the receiver succesfully receives and acknowledges the frames, the
+	system works as usual. However, if the frames are lost and the receiver were
+	to emit another frame, the sender has no way to tell whether the newly emitted
+	frame from the receiver is an ACK or a new frame.
 
 \end{document}
