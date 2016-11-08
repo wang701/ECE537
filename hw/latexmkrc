@@ -2,7 +2,7 @@
 $pdf_mode = 1;
 
 # Set the default file for this project
-@default_files = ('proj1.tex');
+@default_files = ('hw6.tex');
 
 # Keep the output from cluttering everything up and put it in its own directory.
 # This directory does not get tracked by git
