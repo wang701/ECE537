@@ -96,17 +96,14 @@
 	\begin{enumerate}
 		\item Based on the Norton's Equivalent network diagram in the homework, we
 			can draw the state transition diagram as in Figure 1.
-			%TODO: picture
+			\vspace{40mm}
 			We can write the balance equations based on the state transition diagram:
 			\begin{gather*}
 				P_{0} \lambda(N) = \mu P_{1} \implies P_{1} = P_{0} \frac{\lambda(N)}{\mu} \\
 				P_{1} \lambda(N-1) = \mu P_{2} \implies P_{2} = P_{0} \frac{\lambda(N)}{\mu} \frac{\lambda(N-1)}{\mu} \\
-				\ldots
+				\ldots \\
+				\implies P_{n} = \frac{\prod\limits_{i=1}^{n} \lambda(N-(i-1))}{\mu^{n}} P_{0}
 			\end{gather*}
-			From these derivations, we can find that;
-			\begin{align*}
-				P_{n} = \frac{\prod\limits_{i=1}^{n} \lambda(N-(i-1))}{\mu^{n}} P_{0}
-			\end{align*}
 			We can then find $P_{0}$ by normalizing the probability of number of
 			packets $P_{n}$:
 			\begin{gather*}
@@ -123,10 +120,10 @@
 			\end{gather*}
 		\item Solving $\lambda(k)$ requires us to short the upper half the closed
 			queue network. The shorted network diagram is shown in Figure 2.
-			%TODO: picture
+			\vspace{40mm}
 			We can then draw the state transition diagram based on the shorted
 			network which is shown in Figure 3.
-			%TODO: picture
+			\vspace{40mm}
 			By writing the balance equations,
 			\begin{gather*}
 				P_{0} \lambda = P_{1} \alpha \implies P_{1} = \frac{\lambda}{\alpha} P_{0} \\
@@ -145,7 +142,58 @@
 	\end{enumerate}
 
 \section*{Problem 3}
+	\begin{enumerate}
+		\item Let $X$ be the number of times of that a typical packet needs to be
+			(re)transmitted. Then we can have:
+			\begin{align*}
+				P({X=1}) &= 1-p \\
+				P({X=2}) &= p^{1}(1-p) \\
+				P({X=3}) &= p^{2}(1-p) \\
+				&\ldots \\
+				\implies P({X=n}) &= p^{n-1}(1-p)
+			\end{align*}
+			Then, the expected value of $X$, $E[X]$ can be written as:
+			\begin{align*}
+				E[X] &= \sum\limits_{n=1}^{\infty} np^{n-1}(1-p) \\
+				&= \frac{1}{1-p}
+			\end{align*}
+		\item We would first try writing down the state transition diagram as shown
+			in Figure 4. The station transition diagram resembles an M/M/1 queue with
+			service rate $\frac{1-p}{C}$.
+			\vspace{40mm}
+			
+			Based on the state transition diagram, we can derive the balance
+			equations:
+			\begin{gather*}
+				P_{0} \lambda = P_{1} \frac{1-p}{C} \implies P_{1} = \frac{\lambda}{\frac{1-p}{C}} P_{0} \\
+				P_{1} \lambda = P_{2} \frac{1-p}{C} \implies P_{2} = \left(\frac{\lambda}{\frac{1-p}{C}}\right)^{2} P_{0} \\
+				\implies P_{n} = \left(\frac{\lambda}{\frac{1-p}{C}}\right)^{n} P_{0}
+			\end{gather*}
+			By normalizing $P_{n}$, we can easily find that $P_{0}=1-\frac{\lambda}{\frac{1-p}{C}}$.
+			Hence, $P_{n}=\left(\frac{\lambda}{\frac{1-p}{C}}\right)^{n} \left(1-\frac{\lambda}{\frac{1-p}{C}}\right)$.
+			We can further denote $\rho=\frac{\lambda}{\frac{1-p}{C}}$.
+			Since the network resembles an M/M/1 queue, we can obtain:
+			\begin{align*}
+				E[n] &= \frac{\rho}{1-\rho} \\
+				E[T] &= \frac{E[n]}{\lambda} \text{ (Little's Law)}
+			\end{align*}
+	\end{enumerate}
 
 \section*{Problem 4}
+	(I am not sure about this problem.)
+
+	From page of Schwartz textbook, the networkwide expected delay can be
+	calculated as the following:
+	\begin{align*}
+		E[T] = \frac{1}{\gamma} \sum\limits_{i=1}^{M} \frac{\lambda_{i}}{\mu_{i} - \lambda_{i}}
+	\end{align*}
+	Hence, for each node, the service rate $\mu_{i} = \mu p$. On the other
+	hand, the arrival rate at each node is $\lambda_{i} = \mu p + \lambda$.
+	Therefore, the networkwide expected delay is:
+	\begin{align*}
+		E[T] &= \frac{1}{3\lambda} \cdot 4 \cdot \frac{\mu p + \lambda}{\mu p} \\
+		&= \frac{4}{3\lambda} \left( 1 + \frac{\lambda}{\mu p} \right) \\
+		&= \frac{4}{3\lambda} + \frac{4}{3} \cdot \frac{1}{\mu p}
+	\end{align*}
 
 \end{document}
