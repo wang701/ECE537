@@ -1,5 +1,3 @@
-% cat tcp-window.nam | grep "cwnd_" | cut -f3,13 -d " " > cwnd
-
 clear all;
 close all;
 

@@ -1,6 +1,3 @@
-%cat tcp-window.tr | grep "r.*ack" | cut -f2,11 -d " " > ack_seqnum
-%cat tcp-window.tr | grep "+.*tcp" | cut -f2,11 -d " " > tcp_seqnum
-
 clear all;
 close all;
 
