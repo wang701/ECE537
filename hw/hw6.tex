@@ -97,6 +97,7 @@
 		\item Based on the Norton's Equivalent network diagram in the homework, we
 			can draw the state transition diagram as in Figure 1.
 			\vspace{40mm}
+
 			We can write the balance equations based on the state transition diagram:
 			\begin{gather*}
 				P_{0} \lambda(N) = \mu P_{1} \implies P_{1} = P_{0} \frac{\lambda(N)}{\mu} \\
@@ -120,10 +121,15 @@
 			\end{gather*}
 		\item Solving $\lambda(k)$ requires us to short the upper half the closed
 			queue network. The shorted network diagram is shown in Figure 2.
-			\vspace{40mm}
+			\begin{figure}[!hbt]
+				\centering
+				\includegraphics[width=0.8\linewidth]{hw6_2_norton.png}
+			\end{figure}
+
 			We can then draw the state transition diagram based on the shorted
-			network which is shown in Figure 3.
+			network.
 			\vspace{40mm}
+			
 			By writing the balance equations,
 			\begin{gather*}
 				P_{0} \lambda = P_{1} \alpha \implies P_{1} = \frac{\lambda}{\alpha} P_{0} \\
@@ -182,7 +188,7 @@
 \section*{Problem 4}
 	(I am not sure about this problem.)
 
-	From page of Schwartz textbook, the networkwide expected delay can be
+	From page 233 of Schwartz textbook, the networkwide expected delay can be
 	calculated as the following:
 	\begin{align*}
 		E[T] = \frac{1}{\gamma} \sum\limits_{i=1}^{M} \frac{\lambda_{i}}{\mu_{i} - \lambda_{i}}
