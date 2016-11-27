@@ -1,11 +1,8 @@
-%cat tcp-window.tr | grep "r.*ack" | cut -f2,11 -d " " > ack_seqnum
-%cat tcp-window.tr | grep "+.*tcp" | cut -f2,11 -d " " > tcp_seqnum
-
 clear all;
 close all;
 
-ack_seqnum = csvread('ack_seqnum');
-tcp_seqnum = csvread('tcp_seqnum');
+ack_seqnum = csvread('ack_seqnum_reno');
+tcp_seqnum = csvread('tcp_seqnum_reno');
 
 figure(1);
 hold on;
@@ -15,5 +12,5 @@ scatter(tcp_seqnum(:,1), tcp_seqnum(:,2));
 xlabel('Time (seconds)');
 ylabel('Sequence Number');
 legend('ACK packets', 'TCP packets');
-title({'Sequence Number for TCP Packets Sent and', ...
+title({'Sequence Number for TCP Reno Packets Sent and', ...
        'ACK Packets Received at n_0'});
